@@ -26,10 +26,18 @@ const client = new MongoClient(uri, {
     } catch (error) {
         console.log(error.name, error.message);
     }
-    
+
 }
 dbConnect();
 const toyCollection = client.db('toysDB').collection('toys');
+
+
+app.get('/addtoy',async (req,res) =>{
+    const result = await toyCollection.find().toArray();
+    res.send(result);
+})
+
+
 
 
 app.post('/addtoy', async (req,res) =>{
