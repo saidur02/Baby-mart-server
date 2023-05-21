@@ -37,8 +37,6 @@ app.get('/addtoy',async (req,res) =>{
 })
 
 
-
-
 app.post('/addtoy', async (req,res) =>{
     const toy = req.body;
     console.log(toy)
