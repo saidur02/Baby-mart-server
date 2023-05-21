@@ -26,6 +26,7 @@ const client = new MongoClient(uri, {
     } catch (error) {
         console.log(error.name, error.message);
     }
+    
 }
 dbConnect();
 const toyCollection = client.db('toysDB').collection('toys');
