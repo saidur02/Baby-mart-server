@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const app = express();
 const port = process.env.PORT || 5000;
@@ -30,19 +30,20 @@ const client = new MongoClient(uri, {
 dbConnect();
 const toyCollection = client.db('toysDB').collection('toys');
 
-
-app.get('/addtoy',async (req,res) =>{
-    const result = await toyCollection.find().toArray();
-    res.send(result);
-})
-
-
 app.post('/addtoy', async (req,res) =>{
     const toy = req.body;
     console.log(toy)
     const result = await toyCollection.insertOne(toy)
     res.send(result)
 })
+
+
+
+app.get('/addtoy',async (req,res) =>{
+    const result = await toyCollection.find().toArray();
+    res.send(result);
+})
+
 
 
 app.get('/',async (req,res) =>{
@@ -52,6 +53,13 @@ app.get('/',async (req,res) =>{
 app.get('/alltoy',async (req,res) =>{
     const result = await toyCollection.find().toArray();
     res.send(result);
+})
+
+app.delete('/addtoy/:id', async(req,res) =>{
+    const id = req.params.id;
+    const query = { _id: new ObjectId(id) }
+    const result = await toyCollection.deleteOne(query);
+    res.send(result)
 })
 
 
