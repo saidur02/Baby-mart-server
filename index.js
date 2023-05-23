@@ -54,6 +54,10 @@ app.get('/alltoy',async (req,res) =>{
     const result = await toyCollection.find().toArray();
     res.send(result);
 })
+app.get('/alltoy/:id',async (req,res) =>{
+    const result = await toyCollection.find().toArray();
+    res.send(result);
+})
 
 app.delete('/addtoy/:id', async(req,res) =>{
     const id = req.params.id;
@@ -62,6 +66,18 @@ app.delete('/addtoy/:id', async(req,res) =>{
     res.send(result)
 })
 
+app.patch('/addtoy/:id', async (req,res) => {
+    const id = req.params.id;
+    const filter = { _id: new ObjectId(id) }
+    const updateToys = req.body;
+    const updateDoc ={
+        $set:{
+            status:updateToys.status
+        },
+    };
+    const result = await toyCollection.updateOne(filter,updateDoc);
+    res.send(result)
+})
 
 app.get('/',(req,res) => {
     res.send('Baby Mart is Running')
