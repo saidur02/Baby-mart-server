@@ -49,6 +49,10 @@ app.get('/',async (req,res) =>{
     const result = await toyCollection.find().toArray();
     res.send(result);
 })
+app.get('/alltoy',async (req,res) =>{
+    const result = await toyCollection.find().toArray();
+    res.send(result);
+})
 
 
 app.get('/',(req,res) => {
